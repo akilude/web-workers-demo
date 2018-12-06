@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Web Workers</title>
+
+	<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<h2>Web Workers Demo</h2>
+
+	<h3>In this demo, a webworker is created which creates a  array and fills it with a 100000 numbers, it then sorts the array and returns the sorted array to the main thread, which displays the array below.</h3>
+
+	<h3>This post is used as a reference to the <a href="https://livewire.live/blog/an-introduction-to-webworkers/"> https://livewire.live/blog/an-introduction-to-webworkers</a> blog post</h3>
+
+	<textarea rows="100" id="output">
+		
+	</textarea>
+
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function(event){ 
+
+  			var worker = new Worker('worker.js');
+  			worker.postMessage({id:'start'});
+
+  			worker.onmessage = function(event) {
+		    	var data = event.data;    
+
+		    	if(data.id=='sorted_array'){
+		    		var result = data.result;
+		    		document.getElementById('output').value = result;
+		    	}
+		    }
+		});
+	</script>
+
+</body>
+</html>
